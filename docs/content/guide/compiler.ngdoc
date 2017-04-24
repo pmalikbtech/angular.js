@@ -390,12 +390,14 @@ function on the directive element. In the following **faulty example**, a direct
 to a button with `ngClick` on it:
 
 ```
-angular.module('app').directive('addMouseover', function($compile) {
+angular.module('app').directive('addMouseover', function($compile,$timeout) {
   return {
     link: function(scope, element, attrs) {
       var newEl = angular.element('<span ng-show="showHint"> My Hint</span>');
       element.on('mouseenter mouseleave', function() {
-        scope.$apply('showHint = !showHint');
+      $timeout(function(){
+      scope.$apply('showHint = !showHint');},0)
+        
       });
 
       attrs.$set('addMouseover', null); // To stop infinite compile loop
